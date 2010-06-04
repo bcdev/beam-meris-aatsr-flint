@@ -3,10 +3,10 @@
   
   <modelVersion>4.0.0</modelVersion>
   
-  <groupId>org.esa.beam.glint</groupId>
+  <groupId>org.esa.beam</groupId>
   <artifactId>flint</artifactId>
   <packaging>pom</packaging>
-  <version>1.1</version>
+  <version>1.1.1</version>
   <name>flint</name>
   <url>http://maven.apache.org</url>
   
@@ -112,7 +112,7 @@
 			<dependency>
 				<groupId>org.esa.beam</groupId>
 	            <artifactId>beam-collocation</artifactId>
-				<version>1.0.100</version>
+				<version>1.1</version>
 	        </dependency>
             <dependency>
                 <groupId>org.esa.beam</groupId>
