@@ -3,7 +3,7 @@
   <parent>
     <artifactId>flint</artifactId>
     <groupId>org.esa.beam.glint</groupId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
   </parent>
   
   <packaging>jar</packaging>
@@ -12,7 +12,7 @@
   <groupId>org.esa.beam.glint</groupId>
   <artifactId>flint-processor</artifactId>
   <name>Flint Processor</name>
-  <version>1.1.1</version>
+  <version>1.1.2</version>
   <url>http://maven.apache.org</url>
    
   <dependencies>
@@ -39,7 +39,6 @@
 		<dependency>
             <groupId>org.esa.beam</groupId>
             <artifactId>beam-collocation</artifactId>
-			<version>1.0.100</version>
         </dependency>
         <dependency>
             <groupId>org.esa.beam</groupId>
@@ -48,12 +47,10 @@
 		<dependency>
 			<groupId>org.esa.beam</groupId>
 			<artifactId>beam-meris-brr</artifactId>
-			<version>2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.esa.beam</groupId>
 			<artifactId>beam-meris-sdr</artifactId>
-			<version>2.2</version>
 		</dependency>
     </dependencies>
     
@@ -62,7 +59,15 @@
             <plugin>
                 <groupId>com.bc.maven.plugins</groupId>
                 <artifactId>maven-javahelp-plugin</artifactId>
-            </plugin>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>javahelp-indexer</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>            
         </plugins>
     </build>
 </project>
