@@ -1,9 +1,9 @@
 <module>
     <manifestVersion>1.0.0</manifestVersion>
-    <symbolicName>glint-processor</symbolicName>
+    <symbolicName>flint-processor</symbolicName>
     <version>1.1.2</version>
-    <name>Glint Processor</name>
-    <description>Glint Processor</description>
+    <name>Flint Processor</name>
+    <description>Flint Processor</description>
 
     <vendor>Brockmann Consult GmbH</vendor>
     <contactAddress>
