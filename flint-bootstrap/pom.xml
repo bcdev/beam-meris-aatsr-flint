@@ -2,7 +2,7 @@
   <parent>
     <artifactId>flint</artifactId>
     <groupId>org.esa.beam.glint</groupId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
   </parent>
   
   <packaging>jar</packaging>
@@ -11,7 +11,7 @@
   <groupId>org.esa.beam.glint</groupId>
   <artifactId>flint-bootstrap</artifactId>
   <name>Flint Bootstrap</name>
-  <version>1.1.1</version>
+  <version>1.1.2</version>
   <url>http://maven.apache.org</url>
   <description>Provides the bootstrap classpath for all Flint modules</description>
   
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.esa.beam.glint</groupId>
             <artifactId>flint-processor</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
          </dependency>
     </dependencies>
 </project>
