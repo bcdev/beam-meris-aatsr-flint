@@ -1,7 +1,5 @@
 package org.esa.beam.glint.operators;
 
-import com.bc.jnn.JnnException;
-import com.bc.jnn.JnnNet;
 import org.esa.beam.framework.gpf.OperatorException;
 import org.esa.beam.glint.util.GlintHelpers;
 import org.esa.beam.util.logging.BeamLogManager;
@@ -27,13 +25,11 @@ public class FlintSolarPart37 {
     private float[][] hCoeff16;
     private float[] hWeight16;
 
-    private JnnNet neuralNetWv;
-
     private Logger logger;
     private double[] tempFromTable;
     private double[] radianceFromTable;
 
-    private static final float WATER_VAPOUR_STANDARD_VALUE = 2.8f;
+
 
     public FlintSolarPart37() {
         logger = BeamLogManager.getSystemLogger();
@@ -49,7 +45,7 @@ public class FlintSolarPart37 {
     //
     // This method loads required Flint Auxdata
     //
-    protected void loadFlintAuxData() throws IOException, JnnException {
+    protected void loadFlintAuxData() throws IOException {
         aCoeff37 = FlintAuxData.getInstance().readWaterVapourCoefficients(37, "A");
         hCoeff37 = FlintAuxData.getInstance().readWaterVapourCoefficients(37, "H");
         aCoeff16 = FlintAuxData.getInstance().readWaterVapourCoefficients(16, "A");
@@ -57,8 +53,6 @@ public class FlintSolarPart37 {
 
         hWeight37 = FlintAuxData.getInstance().readTransmissionWeights(37, "H");
         hWeight16 = FlintAuxData.getInstance().readTransmissionWeights(16, "H");
-
-        neuralNetWv = FlintAuxData.getInstance().loadNeuralNet(FlintAuxData.NEURAL_NET_WV_OCEAN_MERIS_FILE_NAME);
     }
 
     //
@@ -70,46 +64,7 @@ public class FlintSolarPart37 {
         return ( par[0] + par[1]*aa11 + par[2]*(aa11-aa12) );
     }
 
-    //
-    //  This method computes the water vapour column to correct for transmission in 3.7um (and 1.6um) channel..
-    // Computation by FUB neural net.
-    // (breadboard step 1.b.1)
-    //
-    protected float computeWaterVapour(float zonalWind, float meridionalWind,
-                                       float merisAzimuthDifference,
-                                     float merisViewZenith, float merisSunZenith,
-                                     float merisRadiance14, float merisRadiance15) {
-        float waterVapour = WATER_VAPOUR_STANDARD_VALUE;   // standard value
 
-        final double[] nnIn = new double[5];
-        final double[] nnOut = new double[1];
-
-        double windSpeed = Math.sqrt(zonalWind*zonalWind + meridionalWind*meridionalWind);
-
-        // apply FUB NN...
-        nnIn[0] = windSpeed;
-        nnIn[1] = Math.cos(Math.toRadians(merisAzimuthDifference))*
-                  Math.sin(Math.toRadians(merisViewZenith));  // angles in degree!
-        nnIn[2] = Math.cos(Math.toRadians(merisViewZenith));  // angle in degree!
-        nnIn[3] = Math.cos(Math.toRadians(merisSunZenith));  // angle in degree!
-        nnIn[4] = Math.log(Math.max(merisRadiance15, 1.0E-4)/Math.max(merisRadiance14, 1.0E-4));
-
-        float[][] nnLimits = new float[][]{{3.75e-02f, 1.84e+01f},
-                                           {-6.33e-01f, 6.31e-01f},
-                                           {7.73e-01f, 1.00e+00f},
-                                           {1.60e-01f, 9.26e-01f},
-                                           {-6.98e-01f, 7.62e+00f}};
-
-        for (int i=0; i<nnIn.length; i++) {
-            if (nnIn[i] >= nnLimits[i][0] && nnIn[i] >= nnLimits[i][1]) {
-                // otherwise do not apply NN, keep WV to standard value
-                neuralNetWv.process(nnIn, nnOut);
-                waterVapour = (float) nnOut[0];
-            }
-        }
-
-        return waterVapour;
-    }
     
     //
     //  This method computes the transmission in 3.7um (and 1.6um) channel..

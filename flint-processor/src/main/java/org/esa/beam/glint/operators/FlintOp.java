@@ -128,6 +128,7 @@ public class FlintOp extends Operator {
 
     private FlintPreparation preparation;
     private FlintSolarPart37 solarPart37;
+    private FlintSolarPart37WaterVapour solarPart37WaterVapour;
     private FlintGeometricalConversion geometricalConversion;
     
     private float solarIrradiance37;
@@ -141,6 +142,7 @@ public class FlintOp extends Operator {
 
         preparation = new FlintPreparation();
         solarPart37 = new FlintSolarPart37();
+        solarPart37WaterVapour = new FlintSolarPart37WaterVapour();
         geometricalConversion = new FlintGeometricalConversion();
 
         logger = BeamLogManager.getSystemLogger();
@@ -149,6 +151,7 @@ public class FlintOp extends Operator {
 
         try {
             solarPart37.loadFlintAuxData();
+            solarPart37WaterVapour.loadFlintAuxData();
             geometricalConversion.loadFlintAuxData();
         } catch (Exception e) {
             throw new OperatorException("Failed to load flint auxdata:\n" + e.getMessage());
@@ -306,7 +309,6 @@ public class FlintOp extends Operator {
             Tile seAatsrNadirTile = getSourceTile(collocateProduct.getBand("sun_elev_nadir_S"), rectangle, pm);
             Tile veAatsrNadirTile = getSourceTile(collocateProduct.getBand("view_elev_nadir_S"), rectangle, pm);
             Tile saAatsrNadirTile = getSourceTile(collocateProduct.getBand("sun_azimuth_nadir_S"), rectangle, pm);
-//            Tile vaAatsrNadirTile = getSourceTile(collocateProduct.getBand("view_azimuth_nadir_S"), rectangle, pm);
             Tile cfAatsrNadirTile = getSourceTile(collocateProduct.getBand("cloud_flags_nadir_S"), rectangle, pm);
 
             Tile merisRad14Tile = getSourceTile(collocateProduct.getBand("radiance_14_M"), rectangle, pm);
@@ -317,6 +319,8 @@ public class FlintOp extends Operator {
             Tile aatsrBTNadir1200Tile = getSourceTile(collocateProduct.getBand("btemp_nadir_1200_S"), rectangle, pm);
 
             Tile isInvalid = getSourceTile(invalidBand, rectangle, pm);
+            FlintGeometricalConversion conversion = geometricalConversion.clone();
+            FlintSolarPart37WaterVapour waterVapour = solarPart37WaterVapour.clone();
 
             for (int y = rectangle.y; y < rectangle.y + rectangle.height; y++) {
                 for (int x = rectangle.x; x < rectangle.x + rectangle.width; x++) {
@@ -353,7 +357,7 @@ public class FlintOp extends Operator {
                         final float merisRad14 = merisRad14Tile.getSampleFloat(x, y);
                         final float merisRad15 = merisRad15Tile.getSampleFloat(x, y);
 
-                        float waterVapourColumn = solarPart37.computeWaterVapour(zonalWind, meridWind, merisAzimuthDifference,
+                        float waterVapourColumn = waterVapour.computeWaterVapour(zonalWind, meridWind, merisAzimuthDifference,
                                 merisViewZenith, merisSunZenith, merisRad14, merisRad15);
                         if (targetBand.getName().equals(STEP_1b1_RESULT_NAME)) {
                             targetTile.setSample(x, y, waterVapourColumn);
@@ -439,17 +443,17 @@ public class FlintOp extends Operator {
 
 
                             final float[][] merisNormalizedRadianceResultMatrix =
-                                    geometricalConversion.convertAatsrRad37ToMerisRad(aatsrSolarPart37, merisSunZenith,
+                                    conversion.convertAatsrRad37ToMerisRad(aatsrSolarPart37, merisSunZenith,
                                             merisViewZenith, 180.0f - aatsrAzimuthDifference, 180.0f - merisAzimuthDifference);
 
                             if (targetBand.getName().equals(RESULT_NUMBERWINDSPEEDS_NAME)) {
-                                    int numberWindspeeds = geometricalConversion.windspeedFound(merisNormalizedRadianceResultMatrix);
+                                    int numberWindspeeds = conversion.windspeedFound(merisNormalizedRadianceResultMatrix);
                                     targetTile.setSample(x, y, numberWindspeeds);
                             }
 
                             // 2.b Ambiuguity reduction and final output
-                            if (geometricalConversion.windspeedFound(merisNormalizedRadianceResultMatrix) > 0) {
-                                final float[] finalResultWindspeedRadiance = geometricalConversion.getAmbiguityReducedRadiance
+                            if (conversion.windspeedFound(merisNormalizedRadianceResultMatrix) > 0) {
+                                final float[] finalResultWindspeedRadiance = conversion.getAmbiguityReducedRadiance
                                     (merisNormalizedRadianceResultMatrix, zonalWind, meridWind);
                                 if (targetBand.getName().equals(RESULT_RADIANCE1_NAME)) {
                                     targetTile.setSample(x, y, merisNormalizedRadianceResultMatrix[0][1]);

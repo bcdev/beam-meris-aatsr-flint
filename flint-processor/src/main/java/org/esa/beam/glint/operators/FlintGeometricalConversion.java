@@ -3,10 +3,8 @@ package org.esa.beam.glint.operators;
 import com.bc.jnn.JnnException;
 import com.bc.jnn.JnnNet;
 import org.esa.beam.glint.util.GlintHelpers;
-import org.esa.beam.util.logging.BeamLogManager;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * This class provides the computation of the geometrical conversion of the specular reflection from
@@ -16,17 +14,18 @@ import java.util.logging.Logger;
  * @author Olaf Danne
  * @version $Revision: 5451 $ $Date: 2009-06-05 18:36:49 +0200 (Fr, 05 Jun 2009) $
  */
-public class FlintGeometricalConversion {
+public class FlintGeometricalConversion implements Cloneable {
 
     public static final double refractiveIndexReal037 = 1.37;
     public static final double refractiveIndexReal088 = 1.33;
 
-    private Logger logger;
-
     private JnnNet neuralNetWindspeed;
 
-    public FlintGeometricalConversion() {
-        logger = BeamLogManager.getSystemLogger();
+    @Override
+    protected FlintGeometricalConversion clone()  {
+        FlintGeometricalConversion conversion = new FlintGeometricalConversion();
+        conversion.neuralNetWindspeed = neuralNetWindspeed.clone();
+        return conversion;
     }
 
     //
@@ -50,7 +49,7 @@ public class FlintGeometricalConversion {
     // after ambiguity reduction (ECMWF wind method)
     // (breadboard step 2.b.1)
     //
-    protected float[] getAmbiguityReducedRadiance(float[][] merisNormalizedRadianceResult,
+    protected static float[] getAmbiguityReducedRadiance(float[][] merisNormalizedRadianceResult,
                                                   float zonalWind, float meridionalWind) {
         float[] result = new float[]{-1.0f, -1.0f};
 
@@ -72,7 +71,7 @@ public class FlintGeometricalConversion {
     //
     // This method indicates if a windspeed/radiance result was found from the LUT approach
     //
-    protected int windspeedFound(float[][] radianceResult) {
+    protected static int windspeedFound(float[][] radianceResult) {
         int numberWindspeedsFound = 0;
         
         if (radianceResult[0][0] != -1.0f || radianceResult[1][0] != -1.0f) {
