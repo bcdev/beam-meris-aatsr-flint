@@ -1,21 +1,22 @@
-<?xml version="1.0"?><project>
-  <parent>
-    <artifactId>flint</artifactId>
+<?xml version="1.0"?>
+<project>
+    <parent>
+        <artifactId>flint</artifactId>
+        <groupId>org.esa.beam.glint</groupId>
+        <version>1.2-SNAPSHOT</version>
+    </parent>
+
+    <packaging>jar</packaging>
+
+    <modelVersion>4.0.0</modelVersion>
     <groupId>org.esa.beam.glint</groupId>
-    <version>1.1.2</version>
-  </parent>
-  
-  <packaging>jar</packaging>
-  
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.esa.beam.glint</groupId>
-  <artifactId>flint-bootstrap</artifactId>
-  <name>Flint Bootstrap</name>
-  <version>1.1.1</version>
-  <url>http://maven.apache.org</url>
-  <description>Provides the bootstrap classpath for all Flint modules</description>
-  
-  <dependencies>
+    <artifactId>flint-bootstrap</artifactId>
+    <name>Flint Bootstrap</name>
+    <version>1.2-SNAPSHOT</version>
+    <url>http://maven.apache.org</url>
+    <description>Provides the bootstrap classpath for all Flint modules</description>
+
+    <dependencies>
         <dependency>
             <groupId>com.bc.ceres</groupId>
             <artifactId>ceres-launcher</artifactId>
@@ -23,7 +24,7 @@
         <dependency>
             <groupId>org.esa.beam.glint</groupId>
             <artifactId>flint-processor</artifactId>
-            <version>1.1.2</version>
-         </dependency>
+            <version>1.2-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
