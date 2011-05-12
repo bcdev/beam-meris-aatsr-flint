@@ -4,7 +4,7 @@
     <parent>
         <artifactId>flint</artifactId>
         <groupId>org.esa.beam.glint</groupId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.2</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -13,7 +13,6 @@
     <groupId>org.esa.beam.glint</groupId>
     <artifactId>flint-processor</artifactId>
     <name>Flint Processor</name>
-    <version>1.2-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
 
     <dependencies>
