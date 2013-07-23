@@ -2,7 +2,7 @@
     <manifestVersion>1.0.0</manifestVersion>
     <symbolicName>flint-processor</symbolicName>
     <version>1.1.2</version>
-    <name>Flint Processor</name>
+    <name>MERIS/AATSR Flint Processor (FUB Glint correction)</name>
     <description>
         <![CDATA[
             <p>The MERIS/AATSR Glint Processor allows for the correction of the influence of the atmosphere and the
