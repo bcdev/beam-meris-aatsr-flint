@@ -1,7 +1,7 @@
 <module>
     <manifestVersion>1.0.0</manifestVersion>
     <symbolicName>flint-processor</symbolicName>
-    <version>1.1.2</version>
+    <version>1.2.1</version>
     <name>MERIS/AATSR Flint Processor (FUB Glint correction)</name>
     <description>
         <![CDATA[
@@ -29,7 +29,12 @@
     <url>http://envisat.esa.int/beam</url>
     <licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
 
-    <changelog/>
+    <changelog>
+        Changes in 1.2.1
+        <br/>
+        Updated dependencies
+        <br/>
+    </changelog>
 
     <dependency>
         <module>beam-core</module>

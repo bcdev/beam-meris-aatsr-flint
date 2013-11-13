@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  * @version $Revision: 5451 $ $Date: 2009-06-05 18:36:49 +0200 (Fr, 05 Jun 2009) $
  */
 @OperatorMetadata(alias = "glint.Flint",
-                  version = "1.0-SNAPSHOT",
+                  version = "1.2.1",
                   authors = "Olaf Danne",
                   copyright = "(c) 2009 by Brockmann Consult",
                   description = "Flint Processor.")

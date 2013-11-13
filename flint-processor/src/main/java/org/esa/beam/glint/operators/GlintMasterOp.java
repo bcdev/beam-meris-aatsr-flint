@@ -16,26 +16,27 @@ import java.util.Map;
 
 /**
  * GLINT main operator setting up:
- *     - FLINT algorithm
- *     - ...
+ * - FLINT algorithm
+ * - ...
  *
  * @author Olaf Danne
  * @version $Revision: 5340 $ $Date: 2009-05-27 18:30:05 +0200 (Mi, 27 Mai 2009) $
  */
 @OperatorMetadata(alias = "glint.GlintMaster",
-        version = "1.0.4",
-        authors = "Olaf Danne",
-        copyright = "(c) 2008 by Brockmann Consult",
-        description = "This operator sets up other operators, currently just for FLINT algorithm.")
+                  version = "1.2.1",
+                  authors = "Olaf Danne",
+                  copyright = "(c) 2008 by Brockmann Consult",
+                  description = "This operator sets up other operators, currently just for FLINT algorithm.")
 public class GlintMasterOp extends Operator {
+
     @SourceProduct(alias = "sourceMeris",
-					label = "Name (MERIS L1b product)",
-					description = "The MERIS L1b source product.")
+                   label = "Name (MERIS L1b product)",
+                   description = "The MERIS L1b source product.")
     Product merisSourceProduct;
 
     @SourceProduct(alias = "sourceAATSR",
-					label = "Name (AATSR L1b product)",
-					description = "The AATSR L1b source product.")
+                   label = "Name (AATSR L1b product)",
+                   description = "The AATSR L1b source product.")
     Product aatsrSourceProduct;
 
     @TargetProduct(description = "The target product.")
@@ -77,7 +78,7 @@ public class GlintMasterOp extends Operator {
                label = "Effective Windspeed 2")
     boolean writeEffectiveWindspeed2;
 
-     @Parameter(defaultValue = "false",
+    @Parameter(defaultValue = "false",
                label = "Radiance 1")
     boolean writeRadiance1;
 
@@ -99,7 +100,7 @@ public class GlintMasterOp extends Operator {
         collocateInput.put("masterProduct", merisSourceProduct);
         collocateInput.put("slaveProduct", aatsrSourceProduct);
         Product collocateProduct =
-            GPF.createProduct(OperatorSpi.getOperatorAlias(CollocateOp.class), GPF.NO_PARAMS, collocateInput);
+                GPF.createProduct(OperatorSpi.getOperatorAlias(CollocateOp.class), GPF.NO_PARAMS, collocateInput);
 
         Map<String, Product> flintInput = new HashMap<String, Product>(1);
         flintInput.put("l1bCollocate", collocateProduct);
@@ -135,6 +136,7 @@ public class GlintMasterOp extends Operator {
      * It provides operator meta-data and is a factory for new operator instances.
      */
     public static class Spi extends OperatorSpi {
+
         public Spi() {
             super(GlintMasterOp.class);
         }
