@@ -4,7 +4,7 @@
     <parent>
         <artifactId>flint</artifactId>
         <groupId>org.esa.beam.glint</groupId>
-        <version>1.2.1</version>
+        <version>1.2.2-SNAPSHOT</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -54,7 +54,7 @@
             <plugin>
                 <groupId>com.bc.maven.plugins</groupId>
                 <artifactId>maven-javahelp-plugin</artifactId>
-                <version>1.0</version>
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <goals>
