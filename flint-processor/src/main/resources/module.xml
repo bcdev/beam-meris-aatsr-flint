@@ -15,7 +15,7 @@
 
             <ul>
                 <li><a href="http://github.com/downloads/bcdev/beam-meris-aatsr-flint/glint_agc_atbd.pdf">Glint Correction with MERIS (ATBD 1)</a></li>
-                <li><a href="http://github.com/downloads/bcdev/beam-meris-aatsr-flint/glint_agc_atbd.pdf">Glint Correction with MERIS and AATSR (ATBD 2)</a></li>
+                <li><a href="http://github.com/downloads/bcdev/beam-meris-aatsr-flint/glint_flint_atbd.pdf">Glint Correction with MERIS and AATSR (ATBD 2)</a></li>
                 <li><a href="http://github.com/downloads/bcdev/beam-meris-aatsr-flint/glint_sum.pdf">Software User Manual (SUM)</a></li>
             </ul>
     ]]>
